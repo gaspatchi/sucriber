@@ -25,26 +25,28 @@
 | sms      | boolean | true      | Рассылать ли уведомления по SMS   |
 
 
-- `POST` /schedule/{type}/{id} - Добавление группы или преподавателя в подписки
+- `POST` /schedule - Добавление группы или преподавателя в подписки
 >Для выполнения этого запроса требуется **токен**
 
 - `Request`
 
-| Параметр | Тип      | Описание                                              |
-| -------- | -------- | ----------------------------------------------------- |
-| type     | string   | group/teacher                                         |
-| id       | unsigned | ID группы или преподавателя для добавления в подписки |
+| Параметр    | Тип      | Описание                                                 |
+| ----------- | -------- | -------------------------------------------------------- |
+| section     | string   | При send отправляет подписку на email или sms. send/view |
+| destination | string   | email/sms                                                |
+| type        | string   | teacher/group                                            |
+| id          | unsigned | Id группы или преподавателя                              |
 
-
-- `DELETE` /schedule/{type}/{id} - Удаление группы или преподавателя из подписок
+- `DELETE` /schedule - Удаление группы или преподавателя из подписок
 >Для выполнения этого запроса требуется **токен**
 
 - `Request`
-
-| Параметр | Тип      | Описание                                             |
-| -------- | -------- | ---------------------------------------------------- |
-| type     | string   | group/teacher                                        |
-| id       | unsigned | ID группы или преподавателя для удаления из подписок |
+| Параметр    | Тип      | Описание                                                 |
+| ----------- | -------- | -------------------------------------------------------- |
+| section     | string   | При send отправляет подписку на email или sms. send/view |
+| destination | string   | email/sms                                                |
+| type        | string   | teacher/group                                            |
+| id          | unsigned | Id группы или преподавателя                              |
 
 
 - `GET` /schedule - Получение списка подписок пользователя
@@ -53,21 +55,59 @@
 - `Response`
 ```
 {
-  "groups": [
-    {
-      "group_id": 1,
-      "group": "...",
-      "course": 1
+    "send": {
+        "sms": {
+            "groups": [
+                {
+                    "group_id": 1,
+                    "group": "311",
+                    "course": null
+                }
+            ],
+            "teachers": [
+                {
+                    "teacher_id": 5,
+                    "firstname": "...",
+                    "lastname": "...",
+                    "patronymic": "..."
+                }
+            ]
+        },
+        "email": {
+            "groups": [
+                {
+                    "group_id": 5,
+                    "group": "511",
+                    "course": null
+                }
+            ],
+            "teachers": [
+                {
+                    "teacher_id": 2,
+                    "firstname": "...",
+                    "lastname": "...",
+                    "patronymic": "..."
+                }
+            ]
+        }
+    },
+    "view": {
+        "groups": [
+            {
+                "group_id": 3,
+                "group": "011",
+                "course": null
+            }
+        ],
+        "teachers": [
+            {
+                "teacher_id": 3,
+                "firstname": "...",
+                "lastname": "...",
+                "patronymic": "..."
+            }
+        ]
     }
-  ],
-  "teachers": [
-    {
-      "teacher_id": 1,
-      "firstname": "...",
-      "lastname": "...",
-      "patronymic": "..."
-    }
-  ]
 }
 ```
 
