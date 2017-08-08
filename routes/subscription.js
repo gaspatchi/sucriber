@@ -102,7 +102,7 @@ subscription_router.get("/schedule", verifyAuth, async (req, res) => {
 			let send_email_groups = await Groups.findAll({ attributes: ["group_id", "group", "course"], where: { group_id: response[1][0].send.email.groups } });
 			let send_email_teachers = await Teachers.findAll({ attributes: ["teacher_id", "firstname", "lastname", "patronymic"], where: { teacher_id: response[1][0].send.email.teachers } });
 			let view_groups = await Groups.findAll({ attributes: ["group_id", "group", "course"], where: { group_id: response[1][0].view.groups } });
-			let view_teachers = await Teachers.findAll({ attributes: ["teacher_id", "firstname", "lastname", "patronymic"], where: { teacher_id: response[1][0].view.groups } });
+			let view_teachers = await Teachers.findAll({ attributes: ["teacher_id", "firstname", "lastname", "patronymic"], where: { teacher_id: response[1][0].view.teachers } });
 			get_schedule.inc();
 			res.status(200).json({ send: { sms: { groups: send_sms_groups, teachers: send_sms_teachers }, email: { groups: send_email_groups, teachers: send_email_teachers } }, view: { groups: view_groups, teachers: view_teachers } });
 		} else {
